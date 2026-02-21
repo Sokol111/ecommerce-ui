@@ -81,10 +81,14 @@ export function useFilters(categoryAttributes: Ref<CategoryAttribute[]>) {
     // Update attribute filters
     if (newFilters.attributes !== undefined) {
       // Clear all existing attribute params
+      const keysToRemove = new Set<string>()
       for (const attr of categoryAttributes.value) {
-        delete query[attr.slug]
-        delete query[`${attr.slug}.min`]
-        delete query[`${attr.slug}.max`]
+        keysToRemove.add(attr.slug)
+        keysToRemove.add(`${attr.slug}.min`)
+        keysToRemove.add(`${attr.slug}.max`)
+      }
+      for (const key of keysToRemove) {
+        query[key] = undefined
       }
 
       // Set new ones

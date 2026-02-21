@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const { getAllActiveCategories } = useCategoryApi()
+import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
 
-const { data: categories } = await useAsyncData('categories', () => getAllActiveCategories())
+const { data: categories } = await useFetch<CategoryResponse[]>('/api/categories')
 
 useHead({
   meta: [

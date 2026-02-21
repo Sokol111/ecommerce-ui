@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api'
+
 const route = useRoute()
-const { getProductById } = useProductApi()
 
 const productId = computed(() => route.params.id as string)
 
-const { data: product, error } = await useAsyncData(
-  `product-${productId.value}`,
-  () => getProductById(productId.value)
+const { data: product, error } = await useFetch<ProductResponse>(
+  `/api/products/${productId.value}`
 )
 
 if (error.value || !product.value) {

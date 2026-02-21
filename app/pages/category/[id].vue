@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import type { GetProductListOrder, GetProductListSort } from '@sokol111/ecommerce-product-query-service-api'
+import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
+import type { GetProductListOrder, GetProductListSort, ProductListResponse } from '@sokol111/ecommerce-product-query-service-api'
 
 const route = useRoute()
-const { getCategoryById } = useCategoryApi()
-const { getProductList } = useProductApi()
 
 const PAGE_SIZE = 12
 const categoryId = computed(() => route.params.id as string)
 
 // Fetch category
-const { data: category, error: categoryError } = await useAsyncData(
-  `category-${categoryId.value}`,
-  () => getCategoryById(categoryId.value)
+const { data: category, error: categoryError } = await useFetch<CategoryResponse>(
+  `/api/categories/${categoryId.value}`
 )
 
 if (categoryError.value || !category.value) {
@@ -29,9 +27,8 @@ const sort = computed(() => route.query.sort as GetProductListSort | undefined)
 const order = computed(() => route.query.order as GetProductListOrder | undefined)
 
 // Fetch products
-const { data: productList } = await useAsyncData(
-  `products-${categoryId.value}`,
-  () => getProductList({
+const { data: productList } = await useFetch<ProductListResponse>('/api/products', {
+  query: {
     page: page.value,
     size: size.value,
     categoryId: categoryId.value,
@@ -40,9 +37,9 @@ const { data: productList } = await useAsyncData(
     minPrice: currentFilters.value.price.minPrice,
     maxPrice: currentFilters.value.price.maxPrice,
     attributeFilters: attributeFiltersJson.value
-  }),
-  { watch: [page, size, sort, order, currentFilters] }
-)
+  },
+  watch: [page, size, sort, order, currentFilters]
+})
 
 const totalPages = computed(() => Math.ceil((productList.value?.total ?? 0) / size.value))
 const hasFilters = computed(() => (category.value?.attributes?.length ?? 0) > 0)
