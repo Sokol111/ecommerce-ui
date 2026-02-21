@@ -1,4 +1,8 @@
-<script setup>
+<script setup lang="ts">
+const { getAllActiveCategories } = useCategoryApi()
+
+const { data: categories } = await useAsyncData('categories', () => getAllActiveCategories())
+
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -7,21 +11,18 @@ useHead({
     { rel: 'icon', href: '/favicon.ico' }
   ],
   htmlAttrs: {
-    lang: 'en'
+    lang: 'uk'
   }
 })
 
-const title = 'Nuxt Starter Template'
-const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
+const title = 'Ecommerce Store'
+const description = 'Ласкаво просимо до нашого інтернет-магазину'
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
-  ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
-  twitterCard: 'summary_large_image'
+  ogDescription: description
 })
 </script>
 
@@ -29,49 +30,44 @@ useSeoMeta({
   <UApp>
     <UHeader>
       <template #left>
-        <NuxtLink to="/">
-          <AppLogo class="w-auto h-6 shrink-0" />
+        <NuxtLink to="/" class="text-lg font-semibold whitespace-nowrap">
+          Ecommerce Store
         </NuxtLink>
 
-        <TemplateMenu />
+        <nav class="hidden md:flex ml-8">
+          <ul class="flex gap-4 text-sm font-medium">
+            <li v-for="category in categories" :key="category.id">
+              <NuxtLink
+                :to="`/category/${category.id}`"
+                class="hover:text-primary transition-colors"
+              >
+                {{ category.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
       </template>
 
       <template #right>
         <UColorModeButton />
-
-        <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-          color="neutral"
-          variant="ghost"
-        />
       </template>
     </UHeader>
 
-    <UMain>
-      <NuxtPage />
+    <UMain class="p-5">
+      <div class="mx-auto w-full max-w-7xl px-4 md:px-8">
+        <NuxtPage />
+      </div>
     </UMain>
-
-    <USeparator icon="i-simple-icons-nuxtdotjs" />
 
     <UFooter>
       <template #left>
         <p class="text-sm text-muted">
-          Built with Nuxt UI • © {{ new Date().getFullYear() }}
+          &copy; {{ new Date().getFullYear() }} Ecommerce UI. All rights reserved.
         </p>
       </template>
 
       <template #right>
-        <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-          color="neutral"
-          variant="ghost"
-        />
+        <UColorModeButton />
       </template>
     </UFooter>
   </UApp>

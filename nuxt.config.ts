@@ -14,8 +14,13 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    productQueryApiUrl: '',
+    categoryQueryApiUrl: ''
+  },
+
   routeRules: {
-    '/': { prerender: true }
+    // Disable prerendering for dynamic content
   },
 
   compatibilityDate: '2025-01-15',
