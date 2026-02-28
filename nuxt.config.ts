@@ -29,6 +29,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  vite: {
+    server: {
+      allowedHosts: true
+    }
+  },
+
   hooks: {
     'pages:extend': function (pages) {
       // Remove routes generated from _components directories
