@@ -1,7 +1,4 @@
-import { getCategoryAPI } from '@sokol111/ecommerce-category-query-service-api'
-
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const id = getRouterParam(event, 'id')
 
   if (!id) {
@@ -11,10 +8,10 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const categoryClient = useCategoryQueryClient()
+
   try {
-    const api = getCategoryAPI()
-    const response = await api.getCategoryById(id, { baseURL: config.categoryQueryApiUrl })
-    return response.data
+    return await categoryClient.getCategoryById(id)
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'response' in error) {
       const axiosError = error as { response?: { status?: number } }

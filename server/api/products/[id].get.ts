@@ -1,7 +1,4 @@
-import { getProductQueryAPI } from '@sokol111/ecommerce-product-query-service-api'
-
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const id = getRouterParam(event, 'id')
 
   if (!id) {
@@ -11,10 +8,10 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const productClient = useProductQueryClient()
+
   try {
-    const api = getProductQueryAPI()
-    const response = await api.getProductById(id, { baseURL: config.productQueryApiUrl })
-    return response.data
+    return await productClient.getProductById(id)
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'response' in error) {
       const axiosError = error as { response?: { status?: number } }

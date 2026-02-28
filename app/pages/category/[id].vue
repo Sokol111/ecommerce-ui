@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
 import type { GetProductListOrder, GetProductListSort, ProductListResponse } from '@sokol111/ecommerce-product-query-service-api'
+import ActiveFilters from './_components/ActiveFilters.vue'
+import Filters from './_components/Filters.vue'
+import ProductList from './_components/ProductList.vue'
 
-const route = useRoute()
+const route = useRoute('category-id')
 
 const PAGE_SIZE = 12
-const categoryId = computed(() => route.params.id as string)
+const categoryId = computed(() => route.params.id)
 
 // Fetch category
 const { data: category, error: categoryError } = await useFetch<CategoryResponse>(
@@ -53,7 +56,7 @@ useSeoMeta({ title: category.value?.name })
 
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
-      <CategoryFilters
+      <Filters
         v-if="hasFilters && category?.attributes"
         :category-attributes="category.attributes"
       />
@@ -61,13 +64,13 @@ useSeoMeta({ title: category.value?.name })
       <!-- Main Content -->
       <div class="flex-1 min-w-0">
         <!-- Active Filters -->
-        <CategoryActiveFilters
+        <ActiveFilters
           v-if="hasFilters && category?.attributes"
           :category-attributes="category.attributes"
         />
 
         <!-- Product Grid -->
-        <CategoryProductList :products="productList?.items ?? []" />
+        <ProductList :products="productList?.items ?? []" />
 
         <!-- Pagination -->
         <div v-if="totalPages > 1" class="mt-8">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
+import RangeFilter from './RangeFilter.vue';
 
 interface Props {
   categoryAttributes: CategoryAttribute[]
@@ -60,7 +61,7 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
       <USeparator class="mb-4" />
 
       <!-- Price Filter -->
-      <FiltersRangeFilter
+      <RangeFilter
         label="Ціна"
         :min="currentFilters.price.minPrice"
         :max="currentFilters.price.maxPrice"
@@ -89,7 +90,7 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
                 />
 
                 <!-- Range -->
-                <FiltersRangeFilter
+                <RangeFilter
                   v-else-if="attr.type === 'range'"
                   :unit="attr.unit"
                   :min="getAttributeFilter(attr.slug)?.min"

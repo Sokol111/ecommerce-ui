@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const { getRandomProducts } = useProductApi()
+import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api';
 
-const { data: products } = await useAsyncData('random-products', () => getRandomProducts(4))
+const { data: products } = await useFetch<ProductResponse[]>('/api/products/random', {
+  query: { count: 4 }
+})
 </script>
 
 <template>
