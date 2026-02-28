@@ -21,7 +21,7 @@ if (categoryError.value || !category.value) {
 
 // Filters composable
 const categoryAttributesRef = computed(() => category.value?.attributes ?? [])
-const { currentFilters, attributeFiltersJson } = useFilters(categoryAttributesRef)
+const { currentFilters, attributeFiltersJson } = provideCategoryFilters(categoryAttributesRef)
 
 // Query params
 const page = computed(() => parseInt(route.query.page as string) || 1)
@@ -32,16 +32,15 @@ const order = computed(() => route.query.order as GetProductListOrder | undefine
 // Fetch products
 const { data: productList } = await useFetch<ProductListResponse>('/api/products', {
   query: {
-    page: page.value,
-    size: size.value,
-    categoryId: categoryId.value,
-    sort: sort.value,
-    order: order.value,
-    minPrice: currentFilters.value.price.minPrice,
-    maxPrice: currentFilters.value.price.maxPrice,
-    attributeFilters: attributeFiltersJson.value
-  },
-  watch: [page, size, sort, order, currentFilters]
+    page,
+    size,
+    categoryId,
+    sort,
+    order,
+    minPrice: () => currentFilters.value.price.minPrice,
+    maxPrice: () => currentFilters.value.price.maxPrice,
+    attributeFilters: attributeFiltersJson
+  }
 })
 
 const totalPages = computed(() => Math.ceil((productList.value?.total ?? 0) / size.value))
@@ -56,18 +55,12 @@ useSeoMeta({ title: category.value?.name })
 
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
-      <Filters
-        v-if="hasFilters && category?.attributes"
-        :category-attributes="category.attributes"
-      />
+      <Filters v-if="hasFilters" />
 
       <!-- Main Content -->
       <div class="flex-1 min-w-0">
         <!-- Active Filters -->
-        <ActiveFilters
-          v-if="hasFilters && category?.attributes"
-          :category-attributes="category.attributes"
-        />
+        <ActiveFilters v-if="hasFilters" />
 
         <!-- Product Grid -->
         <ProductList :products="productList?.items ?? []" />

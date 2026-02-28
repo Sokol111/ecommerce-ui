@@ -2,24 +2,18 @@
 import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
 import RangeFilter from './RangeFilter.vue';
 
-interface Props {
-  categoryAttributes: CategoryAttribute[]
-}
-
-const props = defineProps<Props>()
-const categoryAttributesRef = computed(() => props.categoryAttributes)
-
 const {
   currentFilters,
   setPriceFilter,
   setAttributeFilter,
   clearAllFilters,
   hasActiveFilters,
-  getAttributeFilter
-} = useFilters(categoryAttributesRef)
+  getAttributeFilter,
+  categoryAttributes
+} = useCategoryFilters()
 
 const filterableAttributes = computed(() =>
-  props.categoryAttributes.filter(attr => attr.filterable)
+  categoryAttributes.value.filter(attr => attr.filterable)
 )
 
 // Handlers

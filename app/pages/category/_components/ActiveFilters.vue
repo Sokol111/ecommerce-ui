@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
-
-interface Props {
-  categoryAttributes: CategoryAttribute[]
-}
-
-const props = defineProps<Props>()
-const categoryAttributesRef = computed(() => props.categoryAttributes)
-
-const { currentFilters, setPriceFilter, setAttributeFilter, clearAllFilters, hasActiveFilters } = useFilters(categoryAttributesRef)
+const {
+  currentFilters,
+  setPriceFilter,
+  setAttributeFilter,
+  clearAllFilters,
+  hasActiveFilters,
+  categoryAttributes
+} = useCategoryFilters()
 
 const getAttributeName = (slug: string) =>
-  props.categoryAttributes.find(a => a.slug === slug)?.name ?? slug
+  categoryAttributes.value.find(a => a.slug === slug)?.name ?? slug
 
 const getOptionName = (attrSlug: string, optionSlug: string) => {
-  const attr = props.categoryAttributes.find(a => a.slug === attrSlug)
+  const attr = categoryAttributes.value.find(a => a.slug === attrSlug)
   return attr?.options?.find(o => o.slug === optionSlug)?.name ?? optionSlug
 }
 
