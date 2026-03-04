@@ -19,9 +19,9 @@ if (categoryError.value || !category.value) {
   throw createError({ statusCode: 404, statusMessage: 'Категорія не знайдена' })
 }
 
-// Filters composable
-const categoryAttributesRef = computed(() => category.value?.attributes ?? [])
-const { currentFilters, attributeFiltersJson } = provideCategoryFilters(categoryAttributesRef)
+// Filters
+const categoryAttributes = computed(() => category.value?.attributes ?? [])
+const { currentFilters, attributeFiltersJson } = useFilters()
 
 // Query params
 const page = computed(() => parseInt(route.query.page as string) || 1)
@@ -55,12 +55,12 @@ useSeoMeta({ title: category.value?.name })
 
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
-      <Filters v-if="hasFilters" />
+      <Filters v-if="hasFilters" :category-attributes="categoryAttributes" />
 
       <!-- Main Content -->
       <div class="flex-1 min-w-0">
         <!-- Active Filters -->
-        <ActiveFilters v-if="hasFilters" />
+        <ActiveFilters v-if="hasFilters" :category-attributes="categoryAttributes" />
 
         <!-- Product Grid -->
         <ProductList :products="productList?.items ?? []" />

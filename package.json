@@ -19,7 +19,6 @@
     "@sokol111/ecommerce-product-query-service-api": "link:../ecommerce-product-query-service-api/gen/typescript",
     "@vee-validate/nuxt": "4.15.1",
     "@vueuse/nuxt": "14.2.1",
-    "axios": "^1.10.0",
     "nuxt": "^4.3.1",
     "tailwindcss": "^4.1.18",
     "zod": "^4.1.13"

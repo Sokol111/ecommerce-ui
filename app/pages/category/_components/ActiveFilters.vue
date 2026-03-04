@@ -1,18 +1,23 @@
 <script setup lang="ts">
+import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
+
+const { categoryAttributes } = defineProps<{
+  categoryAttributes: CategoryAttribute[]
+}>()
+
 const {
   currentFilters,
   setPriceFilter,
   setAttributeFilter,
   clearAllFilters,
-  hasActiveFilters,
-  categoryAttributes
-} = useCategoryFilters()
+  hasActiveFilters
+} = useFilters()
 
 const getAttributeName = (slug: string) =>
-  categoryAttributes.value.find(a => a.slug === slug)?.name ?? slug
+  categoryAttributes.find(a => a.slug === slug)?.name ?? slug
 
 const getOptionName = (attrSlug: string, optionSlug: string) => {
-  const attr = categoryAttributes.value.find(a => a.slug === attrSlug)
+  const attr = categoryAttributes.find(a => a.slug === attrSlug)
   return attr?.options?.find(o => o.slug === optionSlug)?.name ?? optionSlug
 }
 
@@ -32,21 +37,21 @@ const priceLabel = computed(() => {
     <!-- Price -->
     <UBadge v-if="currentFilters.price.minPrice || currentFilters.price.maxPrice" color="neutral" variant="subtle">
       Ціна: {{ priceLabel }}
-      <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setPriceFilter()" />
+      <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setPriceFilter({})" />
     </UBadge>
 
     <!-- Attribute values -->
     <template v-for="filter in currentFilters.attributes" :key="filter.slug">
       <UBadge v-for="val in (filter.values ?? [])" :key="`${filter.slug}-${val}`" color="neutral" variant="subtle">
         {{ getAttributeName(filter.slug) }}: {{ getOptionName(filter.slug, val) }}
-        <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setAttributeFilter(filter.slug)" />
+        <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setAttributeFilter({ slug: filter.slug })" />
       </UBadge>
 
       <!-- Range values -->
       <UBadge v-if="filter.min !== undefined || filter.max !== undefined" color="neutral" variant="subtle">
         {{ getAttributeName(filter.slug) }}:
         {{ filter.min && filter.max ? `${filter.min} - ${filter.max}` : filter.min ? `Від ${filter.min}` : `До ${filter.max}` }}
-        <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setAttributeFilter(filter.slug)" />
+        <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setAttributeFilter({ slug: filter.slug })" />
       </UBadge>
     </template>
 

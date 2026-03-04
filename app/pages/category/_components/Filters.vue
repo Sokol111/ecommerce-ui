@@ -2,31 +2,45 @@
 import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
 import RangeFilter from './RangeFilter.vue';
 
+const { categoryAttributes } = defineProps<{
+  categoryAttributes: CategoryAttribute[]
+}>()
+
 const {
   currentFilters,
   setPriceFilter,
   setAttributeFilter,
   clearAllFilters,
   hasActiveFilters,
-  getAttributeFilter,
-  categoryAttributes
-} = useCategoryFilters()
+  getAttributeFilter
+} = useFilters()
 
 const filterableAttributes = computed(() =>
-  categoryAttributes.value.filter(attr => attr.filterable)
+  categoryAttributes.filter(attr => attr.filterable)
 )
+
+// Accordion items with full attribute data for direct access in slots
+const accordionItems = computed(() =>
+  filterableAttributes.value.map(attr => ({
+    value: attr.slug,
+    label: attr.name,
+    attr
+  }))
+)
+
+const openSlugs = ref(filterableAttributes.value.slice(0, 3).map(attr => attr.slug))
 
 // Handlers
 const handleCheckboxChange = (slug: string, values: string[]) => {
-  setAttributeFilter(slug, values.length > 0 ? values : undefined)
+  setAttributeFilter({ slug, values: values.length > 0 ? values : undefined })
 }
 
 const handleRangeChange = (slug: string, min?: number, max?: number) => {
-  setAttributeFilter(slug, undefined, min, max)
+  setAttributeFilter({ slug, min, max })
 }
 
 const handleBooleanChange = (slug: string, checked: boolean) => {
-  setAttributeFilter(slug, checked ? ['true'] : undefined)
+  setAttributeFilter({ slug, values: checked ? ['true'] : undefined })
 }
 
 // For UCheckboxGroup - transform options to required format
@@ -59,7 +73,7 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
         label="Ціна"
         :min="currentFilters.price.minPrice"
         :max="currentFilters.price.maxPrice"
-        @apply="setPriceFilter"
+        @apply="(min?: number, max?: number) => setPriceFilter({ minPrice: min, maxPrice: max })"
       />
 
       <template v-if="filterableAttributes.length > 0">
@@ -67,40 +81,36 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
 
         <!-- Attribute Filters -->
         <UAccordion
-          :items="filterableAttributes.map(attr => ({ value: attr.slug, label: attr.name }))"
-          :default-value="filterableAttributes.slice(0, 3).map(attr => attr.slug)"
-          multiple
+          v-model="openSlugs"
+          type="multiple"
+          :items="accordionItems"
         >
-          <template #content="{ item }">
-            <template v-for="attr in filterableAttributes" :key="attr.slug">
-              <template v-if="item.value === attr.slug">
-                <!-- Checkbox (single/multiple) -->
-                <UCheckboxGroup
-                  v-if="(attr.type === 'single' || attr.type === 'multiple') && attr.options"
-                  :model-value="getAttributeFilter(attr.slug)?.values ?? []"
-                  :items="getCheckboxOptions(attr)"
-                  class="space-y-2 max-h-48 overflow-y-auto"
-                  @update:model-value="(v: unknown) => handleCheckboxChange(attr.slug, v as string[])"
-                />
+          <template #body="{ item }">
+            <!-- Checkbox (single/multiple) -->
+            <UCheckboxGroup
+              v-if="(item.attr.type === 'single' || item.attr.type === 'multiple') && item.attr.options"
+              :model-value="getAttributeFilter(item.attr.slug)?.values ?? []"
+              :items="getCheckboxOptions(item.attr)"
+              class="space-y-2 max-h-48 overflow-y-auto"
+              @update:model-value="(v: unknown) => handleCheckboxChange(item.attr.slug, v as string[])"
+            />
 
-                <!-- Range -->
-                <RangeFilter
-                  v-else-if="attr.type === 'range'"
-                  :unit="attr.unit"
-                  :min="getAttributeFilter(attr.slug)?.min"
-                  :max="getAttributeFilter(attr.slug)?.max"
-                  @apply="(min, max) => handleRangeChange(attr.slug, min, max)"
-                />
+            <!-- Range -->
+            <RangeFilter
+              v-else-if="item.attr.type === 'range'"
+              :unit="item.attr.unit"
+              :min="getAttributeFilter(item.attr.slug)?.min"
+              :max="getAttributeFilter(item.attr.slug)?.max"
+              @apply="(min, max) => handleRangeChange(item.attr.slug, min, max)"
+            />
 
-                <!-- Boolean -->
-                <USwitch
-                  v-else-if="attr.type === 'boolean'"
-                  :model-value="getAttributeFilter(attr.slug)?.values?.includes('true') ?? false"
-                  label="Так"
-                  @update:model-value="(v) => handleBooleanChange(attr.slug, v)"
-                />
-              </template>
-            </template>
+            <!-- Boolean -->
+            <USwitch
+              v-else-if="item.attr.type === 'boolean'"
+              :model-value="getAttributeFilter(item.attr.slug)?.values?.includes('true') ?? false"
+              label="Так"
+              @update:model-value="(v) => handleBooleanChange(item.attr.slug, v)"
+            />
           </template>
         </UAccordion>
       </template>
