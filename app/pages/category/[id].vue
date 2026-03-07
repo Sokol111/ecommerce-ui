@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
-import type { GetProductListOrder, GetProductListSort, ProductListResponse } from '@sokol111/ecommerce-product-query-service-api'
+import type { FacetsResponse, GetProductListOrder, GetProductListSort, ProductListResponse } from '@sokol111/ecommerce-product-query-service-api'
 import ActiveFilters from './_components/ActiveFilters.vue'
 import Filters from './_components/Filters.vue'
 import ProductList from './_components/ProductList.vue'
@@ -43,6 +43,11 @@ const { data: productList } = await useFetch<ProductListResponse>('/api/products
   }
 })
 
+// Fetch facets
+const { data: facets } = await useFetch<FacetsResponse>('/api/products/facets', {
+  query: { categoryId }
+})
+
 const totalPages = computed(() => Math.ceil((productList.value?.total ?? 0) / size.value))
 const hasFilters = computed(() => (category.value?.attributes?.length ?? 0) > 0)
 
@@ -55,7 +60,7 @@ useSeoMeta({ title: category.value?.name })
 
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
-      <Filters v-if="hasFilters" :category-attributes="categoryAttributes" />
+      <Filters v-if="hasFilters" :category-attributes="categoryAttributes" :facets="facets ?? undefined" />
 
       <!-- Main Content -->
       <div class="flex-1 min-w-0">

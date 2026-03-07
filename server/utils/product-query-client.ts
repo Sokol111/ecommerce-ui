@@ -1,4 +1,6 @@
 import type {
+  FacetsResponse,
+  GetProductFacetsParams,
   GetProductListParams,
   GetRandomProductsParams,
   ProductListResponse,
@@ -6,6 +8,7 @@ import type {
 } from '@sokol111/ecommerce-product-query-service-api'
 import {
   getGetProductByIdUrl,
+  getGetProductFacetsUrl,
   getGetProductListUrl,
   getGetRandomProductsUrl
 } from '@sokol111/ecommerce-product-query-service-api'
@@ -28,6 +31,12 @@ export function useProductQueryClient() {
       params: GetProductListParams
     ): Promise<ProductListResponse> {
       return $fetch<ProductListResponse>(getGetProductListUrl(params), { baseURL })
+    },
+
+    async getProductFacets(
+      params: GetProductFacetsParams
+    ): Promise<FacetsResponse> {
+      return $fetch<FacetsResponse>(getGetProductFacetsUrl(params), { baseURL })
     }
   }
 }

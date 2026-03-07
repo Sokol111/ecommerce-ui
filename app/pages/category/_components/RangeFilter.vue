@@ -4,6 +4,8 @@ interface Props {
   unit?: string
   min?: number
   max?: number
+  rangeMin?: number
+  rangeMax?: number
 }
 
 const props = defineProps<Props>()
@@ -22,6 +24,14 @@ watch(() => props.max, (val) => {
   localMax.value = val?.toString() ?? ''
 })
 
+const minPlaceholder = computed(() =>
+  props.rangeMin !== undefined ? `Від ${props.rangeMin}` : 'Від'
+)
+
+const maxPlaceholder = computed(() =>
+  props.rangeMax !== undefined ? `До ${props.rangeMax}` : 'До'
+)
+
 const handleApply = () => {
   const minVal = localMin.value ? parseFloat(localMin.value) : undefined
   const maxVal = localMax.value ? parseFloat(localMax.value) : undefined
@@ -37,7 +47,7 @@ const handleApply = () => {
       <UInput
         v-model="localMin"
         type="number"
-        placeholder="Від"
+        :placeholder="minPlaceholder"
         :min="0"
         size="sm"
         @keydown.enter="handleApply"
@@ -46,7 +56,7 @@ const handleApply = () => {
       <UInput
         v-model="localMax"
         type="number"
-        placeholder="До"
+        :placeholder="maxPlaceholder"
         :min="0"
         size="sm"
         @keydown.enter="handleApply"

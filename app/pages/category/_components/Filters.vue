@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
+import type { FacetsResponse } from '@sokol111/ecommerce-product-query-service-api';
 import RangeFilter from './RangeFilter.vue';
 
-const { categoryAttributes } = defineProps<{
+const { categoryAttributes, facets } = defineProps<{
   categoryAttributes: CategoryAttribute[]
+  facets?: FacetsResponse
 }>()
 
 const {
@@ -14,6 +16,19 @@ const {
   hasActiveFilters,
   getAttributeFilter
 } = useFilters()
+
+const facetsBySlug = computed(() => {
+  const map = new Map<string, Map<string, number>>()
+  if (!facets) return map
+  for (const facet of facets.facets) {
+    const valuesMap = new Map<string, number>()
+    for (const v of facet.values) {
+      valuesMap.set(v.value, v.count)
+    }
+    map.set(facet.slug, valuesMap)
+  }
+  return map
+})
 
 const filterableAttributes = computed(() =>
   categoryAttributes.filter(attr => attr.filterable)
@@ -49,10 +64,21 @@ const handleBooleanChange = (slug: string, checked: boolean) => {
 }
 
 const getCheckboxOptions = (attr: CategoryAttribute) => {
-  return attr.options?.map(opt => ({
-    value: opt.slug,
-    label: opt.name
-  })) ?? []
+  const attrFacets = facetsBySlug.value.get(attr.slug)
+  return (attr.options ?? [])
+    .filter(opt => !attrFacets || attrFacets.has(opt.slug))
+    .map(opt => {
+      const count = attrFacets?.get(opt.slug)
+      return {
+        value: opt.slug,
+        label: count !== undefined ? `${opt.name} (${count})` : opt.name
+      }
+    })
+}
+
+const hasBooleanProducts = (slug: string) => {
+  const attrFacets = facetsBySlug.value.get(slug)
+  return !attrFacets || attrFacets.has('true')
 }
 </script>
 
@@ -77,6 +103,8 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
         label="Ціна"
         :min="currentFilters.price.minPrice"
         :max="currentFilters.price.maxPrice"
+        :range-min="facets?.priceRange?.min"
+        :range-max="facets?.priceRange?.max"
         @apply="handlePriceChange"
       />
 
@@ -111,7 +139,7 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
 
             <!-- Boolean -->
             <USwitch
-              v-else-if="attr.type === 'boolean'"
+              v-else-if="attr.type === 'boolean' && hasBooleanProducts(attr.slug)"
               :model-value="getAttributeFilter(attr.slug)?.values?.includes('true') ?? false"
               label="Так"
               @update:model-value="(v) => handleBooleanChange(attr.slug, v)"
