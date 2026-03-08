@@ -66,7 +66,13 @@ useSeoMeta({
     <UFooter>
       <template #left>
         <p class="text-sm text-muted">
-          &copy; {{ new Date().getFullYear() }} Ecommerce UI. All rights reserved.
+          Portfolio project by Ihor Sokolovskyi &mdash;
+          <a
+            href="https://github.com/Sokol111/ecommerce-infrastructure"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline underline-offset-2 hover:text-primary"
+          >GitHub</a>
         </p>
       </template>
 
