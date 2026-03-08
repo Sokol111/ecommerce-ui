@@ -76,6 +76,18 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
     })
 }
 
+const getAttributeSteps = (slug: string) => {
+  const attrFacets = facetsBySlug.value.get(slug)
+  if (!attrFacets) return undefined
+  const nums: number[] = []
+  for (const [value] of attrFacets) {
+    const num = parseFloat(value)
+    if (!isNaN(num)) nums.push(num)
+  }
+  nums.sort((a, b) => a - b)
+  return nums.length >= 2 ? nums : undefined
+}
+
 const hasBooleanProducts = (slug: string) => {
   const attrFacets = facetsBySlug.value.get(slug)
   return !attrFacets || attrFacets.has('true')
@@ -134,6 +146,7 @@ const hasBooleanProducts = (slug: string) => {
               :unit="attr.unit"
               :min="getAttributeFilter(attr.slug)?.min"
               :max="getAttributeFilter(attr.slug)?.max"
+              :steps="getAttributeSteps(attr.slug)"
               @apply="(min, max) => handleRangeChange(attr.slug, min, max)"
             />
 

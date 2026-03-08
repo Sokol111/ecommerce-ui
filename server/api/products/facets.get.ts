@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const query = getQuery(event)
   const categoryId = query.categoryId as string
 
@@ -11,4 +11,10 @@ export default defineEventHandler(async (event) => {
 
   const productClient = useProductQueryClient()
   return await productClient.getProductFacets({ categoryId })
+}, {
+  maxAge: 900,
+  getKey: (event) => {
+    const query = getQuery(event)
+    return `facets:${query.categoryId}`
+  }
 })

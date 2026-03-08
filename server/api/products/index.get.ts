@@ -8,8 +8,10 @@ export default defineEventHandler(async (event) => {
   const categoryId = query.categoryId as string | undefined
   const sort = query.sort as GetProductListSort | undefined
   const order = query.order as GetProductListOrder | undefined
-  const minPrice = query.minPrice ? parseFloat(query.minPrice as string) : undefined
-  const maxPrice = query.maxPrice ? parseFloat(query.maxPrice as string) : undefined
+  const parsedMinPrice = query.minPrice ? parseFloat(query.minPrice as string) : undefined
+  const parsedMaxPrice = query.maxPrice ? parseFloat(query.maxPrice as string) : undefined
+  const minPrice = Number.isFinite(parsedMinPrice) ? parsedMinPrice : undefined
+  const maxPrice = Number.isFinite(parsedMaxPrice) ? parsedMaxPrice : undefined
   const attributeFilters = query.attributeFilters as string | undefined
 
   const productClient = useProductQueryClient()

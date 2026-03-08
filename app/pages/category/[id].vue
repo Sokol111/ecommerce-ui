@@ -28,6 +28,8 @@ const page = computed(() => parseInt(route.query.page as string) || 1)
 const size = computed(() => parseInt(route.query.size as string) || PAGE_SIZE)
 const sort = computed(() => route.query.sort as GetProductListSort | undefined)
 const order = computed(() => route.query.order as GetProductListOrder | undefined)
+const minPrice = computed(() => currentFilters.value.price.minPrice)
+const maxPrice = computed(() => currentFilters.value.price.maxPrice)
 
 // Fetch products
 const { data: productList } = await useFetch<ProductListResponse>('/api/products', {
@@ -37,16 +39,21 @@ const { data: productList } = await useFetch<ProductListResponse>('/api/products
     categoryId,
     sort,
     order,
-    minPrice: () => currentFilters.value.price.minPrice,
-    maxPrice: () => currentFilters.value.price.maxPrice,
+    minPrice,
+    maxPrice,
     attributeFilters: attributeFiltersJson
   }
 })
 
-// Fetch facets
-const { data: facets } = await useFetch<FacetsResponse>('/api/products/facets', {
-  query: { categoryId }
-})
+// Fetch facets (cached per category, independent of pagination/sorting/filters)
+const { data: facets } = await useFetch<FacetsResponse>(
+  `/api/products/facets`,
+  {
+    key: `facets-${categoryId.value}`,
+    query: { categoryId },
+    dedupe: 'defer'
+  }
+)
 
 const totalPages = computed(() => Math.ceil((productList.value?.total ?? 0) / size.value))
 const hasFilters = computed(() => (category.value?.attributes?.length ?? 0) > 0)
@@ -60,7 +67,7 @@ useSeoMeta({ title: category.value?.name })
 
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
-      <Filters v-if="hasFilters" :category-attributes="categoryAttributes" :facets="facets ?? undefined" />
+      <Filters v-if="hasFilters" :category-attributes="categoryAttributes" :facets="facets" />
 
       <!-- Main Content -->
       <div class="flex-1 min-w-0">

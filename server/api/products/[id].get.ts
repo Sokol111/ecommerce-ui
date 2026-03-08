@@ -13,14 +13,11 @@ export default defineEventHandler(async (event) => {
   try {
     return await productClient.getProductById(id)
   } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'response' in error) {
-      const axiosError = error as { response?: { status?: number } }
-      if (axiosError.response?.status === 404) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Product not found'
-        })
-      }
+    if (error && typeof error === 'object' && 'status' in error && (error as { status: number }).status === 404) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Product not found'
+      })
     }
     throw error
   }

@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 
   if (!id) {
@@ -13,15 +13,15 @@ export default defineEventHandler(async (event) => {
   try {
     return await categoryClient.getCategoryById(id)
   } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'response' in error) {
-      const axiosError = error as { response?: { status?: number } }
-      if (axiosError.response?.status === 404) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Category not found'
-        })
-      }
+    if (error && typeof error === 'object' && 'status' in error && (error as { status: number }).status === 404) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Category not found'
+      })
     }
     throw error
   }
+}, {
+  maxAge: 900,
+  getKey: event => `category:${getRouterParam(event, 'id')}`
 })
