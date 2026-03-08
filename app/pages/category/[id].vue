@@ -16,7 +16,7 @@ const { data: category, error: categoryError } = await useFetch<CategoryResponse
 )
 
 if (categoryError.value || !category.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Категорія не знайдена' })
+  throw createError({ statusCode: 404, statusMessage: 'Category not found' })
 }
 
 // Filters

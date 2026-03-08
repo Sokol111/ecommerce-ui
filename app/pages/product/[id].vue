@@ -15,7 +15,7 @@ const { data: product, error } = await useFetch<ProductResponse>(
 if (error.value || !product.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Товар не знайдено'
+    statusMessage: 'Product not found'
   })
 }
 

@@ -1,4 +1,4 @@
-export default defineCachedEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 
   if (!id) {
@@ -21,7 +21,4 @@ export default defineCachedEventHandler(async (event) => {
     }
     throw error
   }
-}, {
-  maxAge: 900,
-  getKey: event => `category:${getRouterParam(event, 'id')}`
 })

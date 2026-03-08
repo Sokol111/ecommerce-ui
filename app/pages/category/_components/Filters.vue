@@ -101,10 +101,10 @@ const hasBooleanProducts = (slug: string) => {
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-semibold flex items-center gap-2">
           <UIcon name="i-lucide-sliders-horizontal" class="size-5" />
-          Фільтри
+          Filters
         </h2>
         <UButton v-if="hasActiveFilters" variant="ghost" size="sm" @click="clearAllFilters">
-          Очистити
+          Clear
         </UButton>
       </div>
 
@@ -112,7 +112,7 @@ const hasBooleanProducts = (slug: string) => {
 
       <!-- Price Filter -->
       <RangeFilter
-        label="Ціна"
+        label="Price"
         :min="currentFilters.price.minPrice"
         :max="currentFilters.price.maxPrice"
         :range-min="facets?.priceRange?.min"
@@ -154,7 +154,7 @@ const hasBooleanProducts = (slug: string) => {
             <USwitch
               v-else-if="attr.type === 'boolean' && hasBooleanProducts(attr.slug)"
               :model-value="getAttributeFilter(attr.slug)?.values?.includes('true') ?? false"
-              label="Так"
+              label="Yes"
               @update:model-value="(v) => handleBooleanChange(attr.slug, v)"
             />
           </template>

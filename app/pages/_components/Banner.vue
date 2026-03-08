@@ -1,9 +1,3 @@
-<script setup lang="ts">
-const handleClick = () => {
-  alert('Clicked')
-}
-</script>
-
 <template>
   <section
     class="relative w-full h-96 overflow-hidden rounded-md"
@@ -16,18 +10,18 @@ const handleClick = () => {
     <div class="absolute inset-0 bg-black/40" />
     <div class="relative h-full flex flex-col items-center justify-center gap-4 px-6 text-center">
       <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-white">
-        Ласкаво просимо
+        Portfolio Project by Ihor Sokolovskyi
       </h1>
-      <p class="text-sm md:text-base text-neutral-200">
-        Проста банерна секція без жодних параметрів.
+      <p class="text-sm md:text-base text-neutral-300 max-w-2xl">
+        A full-stack e-commerce platform built with Go microservices and Nuxt.
+        Explore the architecture and project structure on
+        <a
+          href="https://github.com/Sokol111/ecommerce-infrastructure"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-white underline underline-offset-2 hover:text-neutral-100"
+        >GitHub</a>.
       </p>
-      <UButton
-        variant="solid"
-        color="neutral"
-        @click="handleClick"
-      >
-        Дія →
-      </UButton>
     </div>
   </section>
 </template>

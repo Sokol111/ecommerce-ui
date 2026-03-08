@@ -27,7 +27,7 @@ const renderValue = (attribute: AttributeValue): string => {
     case 'range':
       return values[0]?.value ? `${values[0].value}${unit ? ` ${unit}` : ''}` : '-'
     case 'boolean':
-      return values[0]?.value === 'true' ? 'Так' : 'Ні'
+      return values[0]?.value === 'true' ? 'Yes' : 'No'
     case 'text':
       return values[0]?.value || '-'
     default:
@@ -66,7 +66,7 @@ const renderValue = (attribute: AttributeValue): string => {
     <!-- Specification Attributes (for display) -->
     <UCard v-if="specAttributes.length > 0">
       <template #header>
-        <h3 class="text-lg font-semibold">Характеристики</h3>
+        <h3 class="text-lg font-semibold">Specifications</h3>
       </template>
       <div class="flex flex-col divide-y">
         <div

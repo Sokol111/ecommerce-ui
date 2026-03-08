@@ -11,12 +11,12 @@ useHead({
     { rel: 'icon', href: '/favicon.ico' }
   ],
   htmlAttrs: {
-    lang: 'uk'
+    lang: 'en'
   }
 })
 
 const title = 'Ecommerce Store'
-const description = 'Ласкаво просимо до нашого інтернет-магазину'
+const description = 'Welcome to our online store'
 
 useSeoMeta({
   title,
@@ -52,6 +52,10 @@ useSeoMeta({
         <UColorModeButton />
       </template>
     </UHeader>
+
+    <div class="bg-primary/10 text-primary text-center text-sm py-2 px-4">
+      The frontend uses caching. After changing data in the admin panel, please refresh the page to see the updates.
+    </div>
 
     <UMain class="p-5">
       <div class="mx-auto w-full max-w-7xl px-4 md:px-8">

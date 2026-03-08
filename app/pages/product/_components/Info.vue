@@ -33,21 +33,21 @@ const isInStock = quantity > 0
       <template v-if="isInStock">
         <UBadge color="success" variant="solid" class="gap-1">
           <UIcon name="i-lucide-check" class="h-3 w-3" />
-          В наявності
+          In stock
         </UBadge>
-        <span class="text-sm text-(--ui-text-muted)">({{ quantity }} шт.)</span>
+        <span class="text-sm text-(--ui-text-muted)">({{ quantity }} pcs.)</span>
       </template>
       <template v-else>
         <UBadge color="error" variant="solid" class="gap-1">
           <UIcon name="i-lucide-package" class="h-3 w-3" />
-          Немає в наявності
+          Out of stock
         </UBadge>
       </template>
     </div>
 
     <!-- Description -->
     <div v-if="description" class="mt-2">
-      <h2 class="text-lg font-semibold mb-2">Опис</h2>
+      <h2 class="text-lg font-semibold mb-2">Description</h2>
       <p class="text-(--ui-text-muted) leading-relaxed">{{ description }}</p>
     </div>
 
@@ -61,7 +61,7 @@ const isInStock = quantity > 0
         :disabled="!isInStock"
         icon="i-lucide-shopping-cart"
       >
-        Додати до кошика
+        Add to cart
       </UButton>
     </div>
   </div>

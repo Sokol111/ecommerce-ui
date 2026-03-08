@@ -24,19 +24,19 @@ const getOptionName = (attrSlug: string, optionSlug: string) => {
 const priceLabel = computed(() => {
   const { minPrice, maxPrice } = currentFilters.value.price
   if (minPrice && maxPrice) return `$${minPrice} - $${maxPrice}`
-  if (minPrice) return `Від $${minPrice}`
-  if (maxPrice) return `До $${maxPrice}`
+  if (minPrice) return `From $${minPrice}`
+  if (maxPrice) return `Up to $${maxPrice}`
   return ''
 })
 </script>
 
 <template>
   <div v-if="hasActiveFilters" class="flex flex-wrap items-center gap-2 mb-4">
-    <span class="text-sm text-muted">Активні фільтри:</span>
+    <span class="text-sm text-muted">Active filters:</span>
 
     <!-- Price -->
     <UBadge v-if="currentFilters.price.minPrice || currentFilters.price.maxPrice" color="neutral" variant="subtle">
-      Ціна: {{ priceLabel }}
+      Price: {{ priceLabel }}
       <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setPriceFilter({})" />
     </UBadge>
 
@@ -50,11 +50,11 @@ const priceLabel = computed(() => {
       <!-- Range values -->
       <UBadge v-if="filter.min !== undefined || filter.max !== undefined" color="neutral" variant="subtle">
         {{ getAttributeName(filter.slug) }}:
-        {{ filter.min && filter.max ? `${filter.min} - ${filter.max}` : filter.min ? `Від ${filter.min}` : `До ${filter.max}` }}
+        {{ filter.min && filter.max ? `${filter.min} - ${filter.max}` : filter.min ? `From ${filter.min}` : `Up to ${filter.max}` }}
         <UButton variant="ghost" size="xs" icon="i-lucide-x" class="ml-1 -mr-1" @click="setAttributeFilter({ slug: filter.slug })" />
       </UBadge>
     </template>
 
-    <UButton variant="ghost" size="xs" @click="clearAllFilters">Очистити все</UButton>
+    <UButton variant="ghost" size="xs" @click="clearAllFilters">Clear all</UButton>
   </div>
 </template>

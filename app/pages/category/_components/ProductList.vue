@@ -10,7 +10,7 @@ defineProps<Props>()
 
 <template>
   <div v-if="products.length === 0" class="text-(--ui-text-muted)">
-    В цій категорії немає товарів.
+    No products in this category.
   </div>
   <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     <ProductCard

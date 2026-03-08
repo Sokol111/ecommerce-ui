@@ -26,7 +26,7 @@ const isZoomed = ref(false)
 
     <!-- Zoom hint -->
     <p class="text-xs text-(--ui-text-muted) text-center">
-      Натисніть на зображення, щоб збільшити
+      Click on image to zoom
     </p>
   </div>
 </template>
