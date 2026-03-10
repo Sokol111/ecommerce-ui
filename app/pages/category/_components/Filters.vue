@@ -38,7 +38,7 @@ const filterableAttributes = computed(() =>
 const accordionItems = computed(() =>
   filterableAttributes.value.map(attr => ({
     value: attr.slug,
-    label: attr.name,
+    label: attr.unit && isChoiceType(attr.type) ? `${attr.name} (${attr.unit})` : attr.name,
     attr
   }))
 )
