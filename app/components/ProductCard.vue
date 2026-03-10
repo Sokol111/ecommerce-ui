@@ -31,7 +31,7 @@ const { id, name, price, smallImageUrl, description } = props.product
         {{ description }}
       </p>
       <span class="text-primary font-semibold mt-auto">
-        {{ price.toFixed(2) }} {{ currency }}
+        {{ price % 1 === 0 ? price.toFixed(0) : price.toFixed(2) }} {{ currency }}
       </span>
     </div>
   </NuxtLink>

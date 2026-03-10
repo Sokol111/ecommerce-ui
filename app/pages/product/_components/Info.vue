@@ -22,7 +22,7 @@ const isInStock = quantity > 0
     <!-- Price -->
     <div class="flex items-baseline gap-2">
       <span class="text-3xl font-bold text-primary">
-        {{ price.toFixed(2) }} {{ currency }}
+        {{ price % 1 === 0 ? price.toFixed(0) : price.toFixed(2) }} {{ currency }}
       </span>
     </div>
 
