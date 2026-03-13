@@ -8,16 +8,17 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "link:local": "pnpm link ../ecommerce-product-query-service-api/gen/typescript ../ecommerce-category-query-service-api/gen/typescript",
+    "unlink:local": "rm -f node_modules/@sokol111/ecommerce-product-query-service-api node_modules/@sokol111/ecommerce-category-query-service-api && pnpm install"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.90",
     "@iconify-json/simple-icons": "^1.2.70",
     "@nuxt/ui": "^4.4.0",
     "@pinia/nuxt": "0.11.3",
-    "@sokol111/ecommerce-category-query-service-api": "link:../ecommerce-category-query-service-api/gen/typescript",
-    "@sokol111/ecommerce-product-query-service-api": "link:../ecommerce-product-query-service-api/gen/typescript",
-    "@vee-validate/nuxt": "4.15.1",
+    "@sokol111/ecommerce-category-query-service-api": "1.1.1",
+    "@sokol111/ecommerce-product-query-service-api": "1.1.1",
     "@vueuse/nuxt": "14.2.1",
     "nuxt": "^4.3.1",
     "tailwindcss": "^4.1.18",
@@ -29,12 +30,6 @@
     "typescript": "^5.9.3",
     "unplugin-vue-router": "^0.19.2",
     "vue-tsc": "^3.2.4"
-  },
-  "pnpm": {
-    "overrides": {
-      "@sokol111/ecommerce-category-query-service-api": "link:../ecommerce-category-query-service-api/gen/typescript",
-      "@sokol111/ecommerce-product-query-service-api": "link:../ecommerce-product-query-service-api/gen/typescript"
-    }
   },
   "packageManager": "pnpm@10.29.3"
 }
