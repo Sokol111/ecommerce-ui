@@ -30,13 +30,19 @@ useSeoMeta({
   <UApp>
     <UHeader>
       <template #left>
-        <NuxtLink to="/" class="text-lg font-semibold whitespace-nowrap">
+        <NuxtLink
+          to="/"
+          class="text-lg font-semibold whitespace-nowrap"
+        >
           Ecommerce Store
         </NuxtLink>
 
         <nav class="hidden md:flex ml-8">
           <ul class="flex gap-4 text-sm font-medium">
-            <li v-for="category in categories" :key="category.id">
+            <li
+              v-for="category in categories"
+              :key="category.id"
+            >
               <NuxtLink
                 :to="`/category/${category.id}`"
                 class="hover:text-primary transition-colors"

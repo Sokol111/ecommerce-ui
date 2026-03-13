@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AttributeValue } from '@sokol111/ecommerce-product-query-service-api';
+import type { AttributeValue } from '@sokol111/ecommerce-product-query-service-api'
 
 interface Props {
   attributes: AttributeValue[]
@@ -8,11 +8,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const variantAttributes = computed(() =>
-  props.attributes.filter((attr) => attr.role === 'variant')
+  props.attributes.filter(attr => attr.role === 'variant')
 )
 
 const specAttributes = computed(() =>
-  props.attributes.filter((attr) => attr.role === 'specification')
+  props.attributes.filter(attr => attr.role === 'specification')
 )
 
 const renderValue = (attribute: AttributeValue): string => {
@@ -23,7 +23,7 @@ const renderValue = (attribute: AttributeValue): string => {
     case 'single':
       return values[0]?.value || '-'
     case 'multiple':
-      return values.map((v) => v.value).join(', ') || '-'
+      return values.map(v => v.value).join(', ') || '-'
     case 'range':
       return values[0]?.value ? `${values[0].value}${unit ? ` ${unit}` : ''}` : '-'
     case 'boolean':
@@ -39,8 +39,15 @@ const renderValue = (attribute: AttributeValue): string => {
 <template>
   <div class="flex flex-col gap-6">
     <!-- Variant Attributes (for selection like color, size) -->
-    <div v-if="variantAttributes.length > 0" class="flex flex-col gap-4">
-      <div v-for="attr in variantAttributes" :key="attr.attributeId" class="flex flex-col gap-2">
+    <div
+      v-if="variantAttributes.length > 0"
+      class="flex flex-col gap-4"
+    >
+      <div
+        v-for="attr in variantAttributes"
+        :key="attr.attributeId"
+        class="flex flex-col gap-2"
+      >
         <span class="text-sm font-medium">{{ attr.name }}</span>
         <div class="flex flex-wrap gap-2">
           <template v-if="attr.type === 'single' || attr.type === 'multiple'">
@@ -66,7 +73,9 @@ const renderValue = (attribute: AttributeValue): string => {
     <!-- Specification Attributes (for display) -->
     <UCard v-if="specAttributes.length > 0">
       <template #header>
-        <h3 class="text-lg font-semibold">Specifications</h3>
+        <h3 class="text-lg font-semibold">
+          Specifications
+        </h3>
       </template>
       <div class="flex flex-col divide-y">
         <div

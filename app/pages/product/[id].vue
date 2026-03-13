@@ -35,7 +35,10 @@ useSeoMeta({
 
       <!-- Product Info -->
       <div class="flex flex-col gap-6">
-        <Info v-if="product" :product="product" />
+        <Info
+          v-if="product"
+          :product="product"
+        />
 
         <!-- Product Attributes -->
         <Attributes

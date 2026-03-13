@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
-import type { FacetsResponse } from '@sokol111/ecommerce-product-query-service-api';
-import RangeFilter from './RangeFilter.vue';
+import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api'
+import type { FacetsResponse } from '@sokol111/ecommerce-product-query-service-api'
+import RangeFilter from './RangeFilter.vue'
 
 const { categoryAttributes, facets } = defineProps<{
   categoryAttributes: CategoryAttribute[]
@@ -67,7 +67,7 @@ const getCheckboxOptions = (attr: CategoryAttribute) => {
   const attrFacets = facetsBySlug.value.get(attr.slug)
   return (attr.options ?? [])
     .filter(opt => !attrFacets || attrFacets.has(opt.slug))
-    .map(opt => {
+    .map((opt) => {
       const count = attrFacets?.get(opt.slug)
       return {
         value: opt.slug,
@@ -100,10 +100,18 @@ const hasBooleanProducts = (slug: string) => {
       <!-- Header -->
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-semibold flex items-center gap-2">
-          <UIcon name="i-lucide-sliders-horizontal" class="size-5" />
+          <UIcon
+            name="i-lucide-sliders-horizontal"
+            class="size-5"
+          />
           Filters
         </h2>
-        <UButton v-if="hasActiveFilters" variant="ghost" size="sm" @click="clearAllFilters">
+        <UButton
+          v-if="hasActiveFilters"
+          variant="ghost"
+          size="sm"
+          @click="clearAllFilters"
+        >
           Clear
         </UButton>
       </div>

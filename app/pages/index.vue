@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Banner from './_components/Banner.vue';
-import RandomProducts from './_components/RandomProducts.vue';
+import Banner from './_components/Banner.vue'
+import RandomProducts from './_components/RandomProducts.vue'
 </script>
 
 <template>

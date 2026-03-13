@@ -104,8 +104,14 @@ const formatValue = (val: number) => {
 </script>
 
 <template>
-  <div v-if="hasRange" class="space-y-3">
-    <UFormField v-if="label" :label="label" />
+  <div
+    v-if="hasRange"
+    class="space-y-3"
+  >
+    <UFormField
+      v-if="label"
+      :label="label"
+    />
     <div class="flex items-center justify-between text-sm font-medium">
       <span>{{ formatValue(displayMin) }}</span>
       <span>{{ formatValue(displayMax) }}</span>

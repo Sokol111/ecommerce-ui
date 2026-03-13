@@ -63,23 +63,38 @@ useSeoMeta({ title: category.value?.name })
 
 <template>
   <div class="py-6">
-    <h1 class="text-2xl font-bold mb-6">{{ category?.name }}</h1>
+    <h1 class="text-2xl font-bold mb-6">
+      {{ category?.name }}
+    </h1>
 
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
-      <Filters v-if="hasFilters" :category-attributes="categoryAttributes" :facets="facets" />
+      <Filters
+        v-if="hasFilters"
+        :category-attributes="categoryAttributes"
+        :facets="facets"
+      />
 
       <!-- Main Content -->
       <div class="flex-1 min-w-0">
         <!-- Active Filters -->
-        <ActiveFilters v-if="hasFilters" :category-attributes="categoryAttributes" />
+        <ActiveFilters
+          v-if="hasFilters"
+          :category-attributes="categoryAttributes"
+        />
 
         <!-- Product Grid -->
         <ProductList :products="productList?.items ?? []" />
 
         <!-- Pagination -->
-        <div v-if="totalPages > 1" class="mt-8">
-          <AppPagination :current-page="page" :total-pages="totalPages" />
+        <div
+          v-if="totalPages > 1"
+          class="mt-8"
+        >
+          <AppPagination
+            :current-page="page"
+            :total-pages="totalPages"
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api';
+import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api'
 
 interface Props {
   product: ProductResponse
@@ -27,7 +27,10 @@ const { id, name, price, smallImageUrl, description } = props.product
     </div>
     <div class="flex-1 flex flex-col">
       <h3 class="text-sm font-medium line-clamp-2 mb-1">{{ name }}</h3>
-      <p v-if="description" class="text-xs text-(--ui-text-muted) line-clamp-2 mb-1">
+      <p
+        v-if="description"
+        class="text-xs text-(--ui-text-muted) line-clamp-2 mb-1"
+      >
         {{ description }}
       </p>
       <span class="text-primary font-semibold mt-auto">

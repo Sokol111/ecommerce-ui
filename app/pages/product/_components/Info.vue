@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api';
+import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api'
 
 interface Props {
   product: ProductResponse
@@ -17,7 +17,9 @@ const isInStock = quantity > 0
 <template>
   <div class="flex flex-col gap-4">
     <!-- Product Name -->
-    <h1 class="text-2xl lg:text-3xl font-bold">{{ name }}</h1>
+    <h1 class="text-2xl lg:text-3xl font-bold">
+      {{ name }}
+    </h1>
 
     <!-- Price -->
     <div class="flex items-baseline gap-2">
@@ -31,24 +33,45 @@ const isInStock = quantity > 0
     <!-- Stock Status -->
     <div class="flex items-center gap-2">
       <template v-if="isInStock">
-        <UBadge color="success" variant="solid" class="gap-1">
-          <UIcon name="i-lucide-check" class="h-3 w-3" />
+        <UBadge
+          color="success"
+          variant="solid"
+          class="gap-1"
+        >
+          <UIcon
+            name="i-lucide-check"
+            class="h-3 w-3"
+          />
           In stock
         </UBadge>
         <span class="text-sm text-(--ui-text-muted)">({{ quantity }} pcs.)</span>
       </template>
       <template v-else>
-        <UBadge color="error" variant="solid" class="gap-1">
-          <UIcon name="i-lucide-package" class="h-3 w-3" />
+        <UBadge
+          color="error"
+          variant="solid"
+          class="gap-1"
+        >
+          <UIcon
+            name="i-lucide-package"
+            class="h-3 w-3"
+          />
           Out of stock
         </UBadge>
       </template>
     </div>
 
     <!-- Description -->
-    <div v-if="description" class="mt-2">
-      <h2 class="text-lg font-semibold mb-2">Description</h2>
-      <p class="text-(--ui-text-muted) leading-relaxed">{{ description }}</p>
+    <div
+      v-if="description"
+      class="mt-2"
+    >
+      <h2 class="text-lg font-semibold mb-2">
+        Description
+      </h2>
+      <p class="text-(--ui-text-muted) leading-relaxed">
+        {{ description }}
+      </p>
     </div>
 
     <USeparator />
