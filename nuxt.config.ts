@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ],
 
   devtools: {
-    enabled: process.env.NODE_ENV !== 'production'
+    enabled: import.meta.dev
   },
 
   css: ['~/assets/css/main.css'],
@@ -37,9 +37,10 @@ export default defineNuxtConfig({
   hooks: {
     'pages:extend': function (pages) {
       // Remove routes generated from _components directories
-      function removePagesWithComponents(pages: { path: string, name?: string, children?: unknown[] }[]) {
+      interface NuxtPage { path: string, name?: string, children?: NuxtPage[] }
+      function removePagesWithComponents(pages: NuxtPage[]) {
         for (let i = pages.length - 1; i >= 0; i--) {
-          const page = pages[i]
+          const page = pages[i]!
           if (page.path.includes('_components') || page.name?.includes('_components')) {
             pages.splice(i, 1)
           } else if (page.children) {
@@ -47,7 +48,7 @@ export default defineNuxtConfig({
           }
         }
       }
-      removePagesWithComponents(pages)
+      removePagesWithComponents(pages as NuxtPage[])
     }
   },
 
