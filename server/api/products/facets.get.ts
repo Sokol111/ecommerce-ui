@@ -1,3 +1,7 @@
+import { consola } from 'consola'
+
+const logger = consola.withTag('api:products:facets')
+
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const categoryId = query.categoryId as string
@@ -10,5 +14,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const productClient = useProductQueryClient()
-  return await productClient.getProductFacets({ categoryId })
+
+  try {
+    return await productClient.getProductFacets({ categoryId })
+  } catch (error: unknown) {
+    logger.error(`Failed to fetch facets for category ${categoryId}`, error)
+    throw error
+  }
 })

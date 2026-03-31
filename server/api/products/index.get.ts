@@ -1,4 +1,7 @@
 import type { GetProductListOrder, GetProductListSort } from '@sokol111/ecommerce-product-query-service-api'
+import { consola } from 'consola'
+
+const logger = consola.withTag('api:products')
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
@@ -15,14 +18,20 @@ export default defineEventHandler(async (event) => {
   const attributeFilters = query.attributeFilters as string | undefined
 
   const productClient = useProductQueryClient()
-  return await productClient.getProductList({
-    page,
-    size,
-    categoryId,
-    sort,
-    order,
-    minPrice,
-    maxPrice,
-    attributeFilters
-  })
+
+  try {
+    return await productClient.getProductList({
+      page,
+      size,
+      categoryId,
+      sort,
+      order,
+      minPrice,
+      maxPrice,
+      attributeFilters
+    })
+  } catch (error: unknown) {
+    logger.error('Failed to fetch product list', { categoryId, page, size }, error)
+    throw error
+  }
 })

@@ -32,7 +32,7 @@ const minPrice = computed(() => currentFilters.value.price.minPrice)
 const maxPrice = computed(() => currentFilters.value.price.maxPrice)
 
 // Fetch products
-const { data: productList } = await useFetch<ProductListResponse>('/api/products', {
+const { data: productList, error: productListError } = await useFetch<ProductListResponse>('/api/products', {
   query: {
     page,
     size,
@@ -46,7 +46,7 @@ const { data: productList } = await useFetch<ProductListResponse>('/api/products
 })
 
 // Fetch facets (cached per category, independent of pagination/sorting/filters)
-const { data: facets } = await useFetch<FacetsResponse>(
+const { data: facets, error: facetsError } = await useFetch<FacetsResponse>(
   `/api/products/facets`,
   {
     key: `facets-${categoryId.value}`,
@@ -70,7 +70,7 @@ useSeoMeta({ title: category.value?.name })
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Filters Sidebar -->
       <Filters
-        v-if="hasFilters"
+        v-if="hasFilters && !facetsError"
         :category-attributes="categoryAttributes"
         :facets="facets"
       />
@@ -84,7 +84,18 @@ useSeoMeta({ title: category.value?.name })
         />
 
         <!-- Product Grid -->
-        <ProductList :products="productList?.items ?? []" />
+        <UAlert
+          v-if="productListError"
+          color="error"
+          variant="subtle"
+          title="Failed to load products"
+          description="Please try again later."
+          class="mb-4"
+        />
+        <ProductList
+          v-else
+          :products="productList?.items ?? []"
+        />
 
         <!-- Pagination -->
         <div

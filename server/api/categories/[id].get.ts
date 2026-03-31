@@ -1,3 +1,7 @@
+import { consola } from 'consola'
+
+const logger = consola.withTag('api:categories:[id]')
+
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 
@@ -19,6 +23,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Category not found'
       })
     }
+    logger.error(`Failed to fetch category ${id}`, error)
     throw error
   }
 })

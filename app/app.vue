@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
 
-const { data: categories } = await useFetch<CategoryResponse[]>('/api/categories')
+const { data: categories, error: categoriesError } = await useFetch<CategoryResponse[]>('/api/categories')
 
 useHead({
   meta: [
@@ -38,7 +38,17 @@ useSeoMeta({
         </NuxtLink>
 
         <nav class="hidden md:flex ml-8">
-          <ul class="flex gap-4 text-sm font-medium">
+          <UAlert
+            v-if="categoriesError"
+            color="error"
+            variant="subtle"
+            title="Failed to load categories"
+            class="text-xs"
+          />
+          <ul
+            v-else
+            class="flex gap-4 text-sm font-medium"
+          >
             <li
               v-for="category in categories"
               :key="category.id"

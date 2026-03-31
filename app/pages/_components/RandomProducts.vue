@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api'
+import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api';
 
-const { data: products } = await useFetch<ProductResponse[]>('/api/products/random', {
+const { data: products, error } = await useFetch<ProductResponse[]>('/api/products/random', {
   query: { count: 4 }
 })
 </script>
@@ -11,7 +11,16 @@ const { data: products } = await useFetch<ProductResponse[]>('/api/products/rand
     <h2 class="text-lg font-semibold mb-4">
       Random Products
     </h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <UAlert
+      v-if="error"
+      color="error"
+      variant="subtle"
+      title="Failed to load random products"
+    />
+    <div
+      v-else
+      class="grid grid-cols-2 md:grid-cols-4 gap-4"
+    >
       <ProductCard
         v-for="product in products"
         :key="product.id"
