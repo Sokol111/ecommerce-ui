@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -9,6 +10,9 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: import.meta.dev
+  },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
   },
 
   css: ['~/assets/css/main.css'],
@@ -20,10 +24,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     // Disable prerendering for dynamic content
-  },
-
-  app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
   },
 
   experimental: {
