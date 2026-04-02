@@ -15,6 +15,9 @@ useHead({
   }
 })
 
+const requestUrl = useRequestURL()
+const adminPanelUrl = computed(() => `${requestUrl.protocol}//admin.${requestUrl.host}`)
+
 const title = 'Ecommerce Store'
 const description = 'Welcome to our online store'
 
@@ -84,7 +87,13 @@ useSeoMeta({
     </UHeader>
 
     <div class="bg-primary/10 text-primary text-center text-sm py-2 px-4">
-      The frontend uses caching. After changing data in the admin panel, please refresh the page to see the updates.
+      The frontend uses caching. After changing data in the
+      <a
+        :href="adminPanelUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline underline-offset-2 font-medium"
+      >admin panel</a>, please refresh the page to see the updates.
     </div>
 
     <UMain class="p-5">
