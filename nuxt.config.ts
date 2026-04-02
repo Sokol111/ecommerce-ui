@@ -22,6 +22,10 @@ export default defineNuxtConfig({
     // Disable prerendering for dynamic content
   },
 
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+
   experimental: {
     typedPages: true
   },
