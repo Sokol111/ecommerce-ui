@@ -64,6 +64,20 @@ useSeoMeta({
         </nav>
       </template>
 
+      <template #body>
+        <UAlert
+          v-if="categoriesError"
+          color="error"
+          variant="subtle"
+          title="Failed to load categories"
+        />
+        <UNavigationMenu
+          v-else
+          orientation="vertical"
+          :items="categories?.map(c => ({ label: c.name, to: `/category/${c.id}` })) ?? []"
+        />
+      </template>
+
       <template #right>
         <UColorModeButton />
       </template>
