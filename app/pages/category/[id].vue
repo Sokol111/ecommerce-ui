@@ -32,7 +32,7 @@ const minPrice = computed(() => currentFilters.value.price.minPrice)
 const maxPrice = computed(() => currentFilters.value.price.maxPrice)
 
 // Fetch products
-const { data: productList, error: productListError } = await useFetch<ProductListResponse>('/api/products', {
+const { data: productList, error: productListError, status: productListStatus } = await useFetch<ProductListResponse>('/api/products', {
   query: {
     page,
     size,
@@ -92,16 +92,12 @@ useSeoMeta({ title: category.value?.name })
           description="Please try again later."
           class="mb-4"
         />
-        <Transition
+        <ProductList
           v-else
-          name="fade"
-          mode="out-in"
-        >
-          <ProductList
-            :key="`${page}-${sort}-${order}-${minPrice}-${maxPrice}-${attributeFiltersJson}`"
-            :products="productList?.items ?? []"
-          />
-        </Transition>
+          :products="productList?.items ?? []"
+          class="transition-opacity duration-200"
+          :class="{ 'opacity-0': productListStatus === 'pending' }"
+        />
 
         <!-- Pagination -->
         <div
