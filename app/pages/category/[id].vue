@@ -92,10 +92,16 @@ useSeoMeta({ title: category.value?.name })
           description="Please try again later."
           class="mb-4"
         />
-        <ProductList
+        <Transition
           v-else
-          :products="productList?.items ?? []"
-        />
+          name="fade"
+          mode="out-in"
+        >
+          <ProductList
+            :key="`${page}-${sort}-${order}-${minPrice}-${maxPrice}-${attributeFiltersJson}`"
+            :products="productList?.items ?? []"
+          />
+        </Transition>
 
         <!-- Pagination -->
         <div
