@@ -2,8 +2,8 @@ import { consola } from 'consola'
 
 const logger = consola.withTag('api:categories')
 
-export default defineEventHandler(async () => {
-  const categoryClient = useCategoryQueryClient()
+export default defineEventHandler(async (event) => {
+  const categoryClient = useCategoryQueryClient(event)
 
   try {
     return await categoryClient.getAllActiveCategories()

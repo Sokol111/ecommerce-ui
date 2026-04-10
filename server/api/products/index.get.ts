@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   const maxPrice = Number.isFinite(parsedMaxPrice) ? parsedMaxPrice : undefined
   const attributeFilters = query.attributeFilters as string | undefined
 
-  const productClient = useProductQueryClient()
+  const productClient = useProductQueryClient(event)
 
   try {
     return await productClient.getProductList({

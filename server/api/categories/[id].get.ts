@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const categoryClient = useCategoryQueryClient()
+  const categoryClient = useCategoryQueryClient(event)
 
   try {
     return await categoryClient.getCategoryById(id)

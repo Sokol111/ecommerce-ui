@@ -13,30 +13,33 @@ import {
   getGetRandomProductsUrl
 } from '@sokol111/ecommerce-product-query-service-api'
 
-export function useProductQueryClient() {
+import type { H3Event } from 'h3'
+
+export function useProductQueryClient(event: H3Event) {
   const { productQueryApiUrl: baseURL } = useRuntimeConfig()
+  const headers: HeadersInit = { ...tenantHeaders(event) }
 
   return {
     async getProductById(productId: string): Promise<ProductResponse> {
-      return $fetch<ProductResponse>(getGetProductByIdUrl(productId), { baseURL })
+      return $fetch<ProductResponse>(getGetProductByIdUrl(productId), { baseURL, headers })
     },
 
     async getRandomProducts(
       params: GetRandomProductsParams
     ): Promise<ProductResponse[]> {
-      return $fetch<ProductResponse[]>(getGetRandomProductsUrl(params), { baseURL })
+      return $fetch<ProductResponse[]>(getGetRandomProductsUrl(params), { baseURL, headers })
     },
 
     async getProductList(
       params: GetProductListParams
     ): Promise<ProductListResponse> {
-      return $fetch<ProductListResponse>(getGetProductListUrl(params), { baseURL })
+      return $fetch<ProductListResponse>(getGetProductListUrl(params), { baseURL, headers })
     },
 
     async getProductFacets(
       params: GetProductFacetsParams
     ): Promise<FacetsResponse> {
-      return $fetch<FacetsResponse>(getGetProductFacetsUrl(params), { baseURL })
+      return $fetch<FacetsResponse>(getGetProductFacetsUrl(params), { baseURL, headers })
     }
   }
 }

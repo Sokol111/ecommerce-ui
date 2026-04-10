@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const productClient = useProductQueryClient()
+  const productClient = useProductQueryClient(event)
 
   try {
     return await productClient.getProductById(id)

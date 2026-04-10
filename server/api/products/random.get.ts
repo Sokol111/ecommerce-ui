@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const count = parseInt(query.count as string) || 4
 
-  const productClient = useProductQueryClient()
+  const productClient = useProductQueryClient(event)
 
   try {
     return await productClient.getRandomProducts({ count })
