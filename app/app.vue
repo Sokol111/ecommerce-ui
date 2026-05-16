@@ -16,7 +16,10 @@ useHead({
 })
 
 const requestUrl = useRequestURL()
-const adminPanelUrl = computed(() => `${requestUrl.protocol}//admin.${requestUrl.host}`)
+const adminPanelUrl = computed(() => {
+  const host = requestUrl.host.replace(/^[^.]+/, 'admin')
+  return `${requestUrl.protocol}//${host}`
+})
 
 const title = 'Ecommerce Store'
 const description = 'Welcome to our online store'
@@ -90,8 +93,6 @@ useSeoMeta({
       The frontend uses caching. After changing data in the
       <a
         :href="adminPanelUrl"
-        target="_blank"
-        rel="noopener noreferrer"
         class="underline underline-offset-2 font-medium"
       >admin panel</a>, please refresh the page to see the updates.
     </div>
