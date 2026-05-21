@@ -8,29 +8,28 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck",
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@fontsource-variable/public-sans": "^5.2.7",
-    "@iconify-json/lucide": "^1.2.90",
-    "@iconify-json/simple-icons": "^1.2.70",
-    "@nuxt/ui": "^4.4.0",
+    "@iconify-json/lucide": "^1.2.108",
+    "@iconify-json/simple-icons": "^1.2.83",
+    "@nuxt/ui": "^4.7.1",
     "@pinia/nuxt": "0.11.3",
-    "@sokol111/ecommerce-category-query-service-api": "1.1.4",
-    "@sokol111/ecommerce-product-query-service-api": "1.1.4",
-    "@vueuse/nuxt": "14.2.1",
-    "nuxt": "^4.3.1",
-    "tailwindcss": "^4.1.18",
-    "zod": "^4.1.13"
+    "@sokol111/ecommerce-category-query-service-api": "link:../ecommerce-category-query-service-api/gen/typescript",
+    "@sokol111/ecommerce-product-query-service-api": "link:../ecommerce-product-query-service-api/gen/typescript",
+    "@vueuse/nuxt": "14.3.0",
+    "nuxt": "^4.4.6",
+    "tailwindcss": "^4.3.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.15.1",
-    "eslint": "^10.0.0",
-    "typescript": "^5.9.3",
+    "@nuxt/eslint": "^1.15.2",
+    "eslint": "^10.4.0",
+    "typescript": "^6.0.3",
     "unplugin-vue-router": "^0.19.2",
-    "vue-tsc": "^3.2.4"
+    "vue-tsc": "^3.3.1"
   },
-  "packageManager": "pnpm@10.29.3",
+  "packageManager": "pnpm@11.2.2",
   "version": "0.2.2"
 }
