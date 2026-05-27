@@ -24,11 +24,11 @@ importers:
         specifier: 0.11.3
         version: 0.11.3(magicast@0.5.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.34(typescript@6.0.3)))
       '@sokol111/ecommerce-category-query-service-api':
-        specifier: ^1.1.7
-        version: 1.1.7
+        specifier: ^1.1.8
+        version: 1.1.8
       '@sokol111/ecommerce-product-query-service-api':
-        specifier: ^1.1.7
-        version: 1.1.7
+        specifier: ^1.1.8
+        version: 1.1.8
       '@vueuse/nuxt':
         specifier: 14.3.0
         version: 14.3.0(magicast@0.5.3)(nuxt@4.4.6(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@babel/plugin-syntax-typescript@7.28.6(@babel/core@7.29.0))(@parcel/watcher@2.5.6)(@vue/compiler-sfc@3.5.34)(cac@6.7.14)(db0@0.3.4)(eslint@10.4.0(jiti@2.7.0))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.3)(optionator@0.9.4)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.34(typescript@6.0.3)))(rollup-plugin-visualizer@7.0.1(rollup@4.60.4))(rollup@4.60.4)(srvx@0.11.15)(terser@5.47.1)(typescript@6.0.3)(vite@7.3.3(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.9.0))(vue-tsc@3.3.1(typescript@6.0.3))(yaml@2.9.0))(vue@3.5.34(typescript@6.0.3))
@@ -1652,11 +1652,11 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@sokol111/ecommerce-category-query-service-api@1.1.7':
-    resolution: {integrity: sha512-qNNN0pulhvYfQ0RdKDZu8wSsm2Zk6i3G1rXmmbvQ6hEhadPaVV/6HagHKNajxehmrRgVxAGzzSTs3FPmifBYNA==, tarball: https://npm.pkg.github.com/download/@sokol111/ecommerce-category-query-service-api/1.1.7/e9a60f2eff05db8f19a94096d42297bade3bb3b9}
+  '@sokol111/ecommerce-category-query-service-api@1.1.8':
+    resolution: {integrity: sha512-NPp0d5rOZaq9rTYLPKOZTHUHXjPNglO9TD1/TGZPSMpMAS9X6eaxHcMYXt5XxxkyTdTmnoWO8eLMPh+Gde8/DA==, tarball: https://npm.pkg.github.com/download/@sokol111/ecommerce-category-query-service-api/1.1.8/21c596da884435a0f6dbcb326289c211d213b98b}
 
-  '@sokol111/ecommerce-product-query-service-api@1.1.7':
-    resolution: {integrity: sha512-tMa0C9NL5mPMdFeFRfl7rppRWxUVr6wjgbYI2xVbtB1gyx6CwwlKxf/H5bEaEBcjPcJQlrJAlzrUQegkd3BsMQ==, tarball: https://npm.pkg.github.com/download/@sokol111/ecommerce-product-query-service-api/1.1.7/2b24f5a62a554fabe36024cf1a24b82171d8ff1f}
+  '@sokol111/ecommerce-product-query-service-api@1.1.8':
+    resolution: {integrity: sha512-8rDRLP+zq8S3zNRbnWZ8taXTFMSsdWkHVTzNUQ22ExtE4QfPUHkST0FsSsmmB6CpAVVBL8SoNzXZbZm/Av/6kw==, tarball: https://npm.pkg.github.com/download/@sokol111/ecommerce-product-query-service-api/1.1.8/4b084c6057577a08a6a3c45602fdd2bc9a77e8a1}
 
   '@speed-highlight/core@1.2.15':
     resolution: {integrity: sha512-BMq1K3DsElxDWawkX6eLg9+CKJrTVGCBAWVuHXVUV2u0s2711qiChLSId6ikYPfxhdYocLNt3wWwSvDiTvFabw==}
@@ -6852,9 +6852,9 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@sokol111/ecommerce-category-query-service-api@1.1.7': {}
+  '@sokol111/ecommerce-category-query-service-api@1.1.8': {}
 
-  '@sokol111/ecommerce-product-query-service-api@1.1.7': {}
+  '@sokol111/ecommerce-product-query-service-api@1.1.8': {}
 
   '@speed-highlight/core@1.2.15': {}
 

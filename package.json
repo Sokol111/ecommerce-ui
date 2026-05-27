@@ -18,8 +18,8 @@
     "@iconify-json/simple-icons": "^1.2.83",
     "@nuxt/ui": "^4.7.1",
     "@pinia/nuxt": "0.11.3",
-    "@sokol111/ecommerce-category-query-service-api": "^1.1.7",
-    "@sokol111/ecommerce-product-query-service-api": "^1.1.7",
+    "@sokol111/ecommerce-category-query-service-api": "^1.1.8",
+    "@sokol111/ecommerce-product-query-service-api": "^1.1.8",
     "@vueuse/nuxt": "14.3.0",
     "nuxt": "^4.4.6",
     "tailwindcss": "^4.3.0",
@@ -33,5 +33,5 @@
     "vue-tsc": "^3.3.1"
   },
   "packageManager": "pnpm@11.2.2",
-  "version": "0.2.2"
+  "version": "1.0.0"
 }
