@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
-import type { FacetsResponse, GetProductListOrder, GetProductListSort, ProductListResponse } from '@sokol111/ecommerce-product-query-service-api'
+import type { Category } from '@sokol111/ecommerce-category-query-service-api'
+import type { GetProductFacetsResponse, GetProductListResponse } from '@sokol111/ecommerce-product-query-service-api'
 import ActiveFilters from './_components/ActiveFilters.vue'
 import Filters from './_components/Filters.vue'
 import ProductList from './_components/ProductList.vue'
@@ -11,7 +11,7 @@ const PAGE_SIZE = 12
 const categoryId = computed(() => route.params.id)
 
 // Fetch category
-const { data: category, error: categoryError } = await useFetch<CategoryResponse>(
+const { data: category, error: categoryError } = await useFetch<Category>(
   `/api/categories/${categoryId.value}`
 )
 
@@ -26,13 +26,13 @@ const { currentFilters, attributeFiltersJson } = useFilters()
 // Query params
 const page = computed(() => parseInt(route.query.page as string) || 1)
 const size = computed(() => parseInt(route.query.size as string) || PAGE_SIZE)
-const sort = computed(() => route.query.sort as GetProductListSort | undefined)
-const order = computed(() => route.query.order as GetProductListOrder | undefined)
+const sort = computed(() => route.query.sort as string | undefined)
+const order = computed(() => route.query.order as string | undefined)
 const minPrice = computed(() => currentFilters.value.price.minPrice)
 const maxPrice = computed(() => currentFilters.value.price.maxPrice)
 
 // Fetch products
-const { data: productList, error: productListError, status: productListStatus } = await useFetch<ProductListResponse>('/api/products', {
+const { data: productList, error: productListError, status: productListStatus } = await useFetch<GetProductListResponse>('/api/products', {
   query: {
     page,
     size,
@@ -46,7 +46,7 @@ const { data: productList, error: productListError, status: productListStatus } 
 })
 
 // Fetch facets (cached per category, independent of pagination/sorting/filters)
-const { data: facets, error: facetsError } = await useFetch<FacetsResponse>(
+const { data: facets, error: facetsError } = await useFetch<GetProductFacetsResponse>(
   `/api/products/facets`,
   {
     key: `facets-${categoryId.value}`,
@@ -55,7 +55,7 @@ const { data: facets, error: facetsError } = await useFetch<FacetsResponse>(
   }
 )
 
-const totalPages = computed(() => Math.ceil((productList.value?.total ?? 0) / size.value))
+const totalPages = computed(() => Math.ceil(Number(productList.value?.total ?? 0) / size.value))
 const hasFilters = computed(() => (category.value?.attributes?.length ?? 0) > 0)
 
 useSeoMeta({ title: category.value?.name })

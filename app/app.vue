@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CategoryResponse } from '@sokol111/ecommerce-category-query-service-api'
+import type { Category } from '@sokol111/ecommerce-category-query-service-api'
 
-const { data: categories, error: categoriesError } = await useFetch<CategoryResponse[]>('/api/categories')
+const { data: categories, error: categoriesError } = await useFetch<Category[]>('/api/categories')
 
 useHead({
   meta: [

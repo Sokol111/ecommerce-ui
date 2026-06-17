@@ -1,45 +1,68 @@
+import { createClient } from '@connectrpc/connect'
+import { createGrpcTransport } from '@connectrpc/connect-node'
 import type {
-  FacetsResponse,
-  GetProductFacetsParams,
-  GetProductListParams,
-  GetRandomProductsParams,
-  ProductListResponse,
-  ProductResponse
+  GetProductFacetsResponse,
+  GetProductListResponse,
+  Product
 } from '@sokol111/ecommerce-product-query-service-api'
 import {
-  getGetProductByIdUrl,
-  getGetProductFacetsUrl,
-  getGetProductListUrl,
-  getGetRandomProductsUrl
+  ProductQueryService
 } from '@sokol111/ecommerce-product-query-service-api'
 
 import type { H3Event } from 'h3'
 
 export function useProductQueryClient(event: H3Event) {
   const { productQueryApiUrl: baseURL } = useRuntimeConfig()
-  const headers: HeadersInit = { ...tenantHeaders(event) }
+  const headers = tenantHeaders(event) as Record<string, string>
+
+  const transport = createGrpcTransport({
+    baseUrl: baseURL,
+    interceptors: [
+      next => (req) => {
+        for (const [key, value] of Object.entries(headers)) {
+          req.header.set(key, value)
+        }
+        return next(req)
+      }
+    ]
+  })
+
+  const client = createClient(ProductQueryService, transport)
 
   return {
-    async getProductById(productId: string): Promise<ProductResponse> {
-      return $fetch<ProductResponse>(getGetProductByIdUrl(productId), { baseURL, headers })
+    async getProductById(productId: string): Promise<Product> {
+      const response = await client.getProductById({ id: productId })
+      return response.product!
     },
 
-    async getRandomProducts(
-      params: GetRandomProductsParams
-    ): Promise<ProductResponse[]> {
-      return $fetch<ProductResponse[]>(getGetRandomProductsUrl(params), { baseURL, headers })
+    async getRandomProducts(params: { count: number }): Promise<Product[]> {
+      const response = await client.getRandomProducts(params)
+      return response.items
     },
 
-    async getProductList(
-      params: GetProductListParams
-    ): Promise<ProductListResponse> {
-      return $fetch<ProductListResponse>(getGetProductListUrl(params), { baseURL, headers })
+    async getProductList(params: {
+      page: number
+      size: number
+      categoryId?: string
+      sort?: string
+      order?: string
+      minPrice?: number
+      maxPrice?: number
+      attributeFilters?: string
+    }): Promise<GetProductListResponse> {
+      return client.getProductList({
+        page: params.page,
+        size: params.size,
+        categoryId: params.categoryId,
+        sort: params.sort,
+        order: params.order,
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice
+      })
     },
 
-    async getProductFacets(
-      params: GetProductFacetsParams
-    ): Promise<FacetsResponse> {
-      return $fetch<FacetsResponse>(getGetProductFacetsUrl(params), { baseURL, headers })
+    async getProductFacets(params: { categoryId: string }): Promise<GetProductFacetsResponse> {
+      return client.getProductFacets(params)
     }
   }
 }

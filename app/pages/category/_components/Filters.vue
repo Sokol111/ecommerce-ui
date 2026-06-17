@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api'
-import type { FacetsResponse } from '@sokol111/ecommerce-product-query-service-api'
-import RangeFilter from './RangeFilter.vue'
+import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
+import { AttributeType } from '@sokol111/ecommerce-category-query-service-api';
+import type { GetProductFacetsResponse } from '@sokol111/ecommerce-product-query-service-api';
+import RangeFilter from './RangeFilter.vue';
 
 const { categoryAttributes, facets } = defineProps<{
   categoryAttributes: CategoryAttribute[]
-  facets?: FacetsResponse
+  facets?: GetProductFacetsResponse
 }>()
 
 const {
@@ -45,7 +46,7 @@ const accordionItems = computed(() =>
 
 const defaultOpenSlugs = filterableAttributes.value.slice(0, 3).map(attr => attr.slug)
 
-const isChoiceType = (type: string) => type === 'single' || type === 'multiple'
+const isChoiceType = (type: AttributeType) => type === AttributeType.SINGLE || type === AttributeType.MULTIPLE
 
 const handlePriceChange = (min?: number, max?: number) => {
   setPriceFilter({ minPrice: min, maxPrice: max })
@@ -150,7 +151,7 @@ const hasBooleanProducts = (slug: string) => {
 
             <!-- Range -->
             <RangeFilter
-              v-else-if="attr.type === 'range'"
+              v-else-if="attr.type === AttributeType.RANGE"
               :unit="attr.unit"
               :min="getAttributeFilter(attr.slug)?.min"
               :max="getAttributeFilter(attr.slug)?.max"
@@ -160,7 +161,7 @@ const hasBooleanProducts = (slug: string) => {
 
             <!-- Boolean -->
             <USwitch
-              v-else-if="attr.type === 'boolean' && hasBooleanProducts(attr.slug)"
+              v-else-if="attr.type === AttributeType.BOOLEAN && hasBooleanProducts(attr.slug)"
               :model-value="getAttributeFilter(attr.slug)?.values?.includes('true') ?? false"
               label="Yes"
               @update:model-value="(v) => handleBooleanChange(attr.slug, v)"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AttributeValue } from '@sokol111/ecommerce-product-query-service-api'
+import { AttributeRole, AttributeType, type AttributeValue } from '@sokol111/ecommerce-product-query-service-api';
 
 interface Props {
   attributes: AttributeValue[]
@@ -8,11 +8,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const variantAttributes = computed(() =>
-  props.attributes.filter(attr => attr.role === 'variant')
+  props.attributes.filter(attr => attr.role === AttributeRole.VARIANT)
 )
 
 const specAttributes = computed(() =>
-  props.attributes.filter(attr => attr.role === 'specification')
+  props.attributes.filter(attr => attr.role === AttributeRole.SPECIFICATION)
 )
 
 const renderValue = (attribute: AttributeValue): string => {
@@ -20,15 +20,15 @@ const renderValue = (attribute: AttributeValue): string => {
   if (values.length === 0) return '-'
 
   switch (type) {
-    case 'single':
+    case AttributeType.SINGLE:
       return values[0]?.value || '-'
-    case 'multiple':
+    case AttributeType.MULTIPLE:
       return values.map(v => v.value).join(', ') || '-'
-    case 'range':
+    case AttributeType.RANGE:
       return values[0]?.value ? `${values[0].value}${unit ? ` ${unit}` : ''}` : '-'
-    case 'boolean':
+    case AttributeType.BOOLEAN:
       return values[0]?.value === 'true' ? 'Yes' : 'No'
-    case 'text':
+    case AttributeType.TEXT:
       return values[0]?.value || '-'
     default:
       return '-'
@@ -50,7 +50,7 @@ const renderValue = (attribute: AttributeValue): string => {
       >
         <span class="text-sm font-medium">{{ attr.name }}</span>
         <div class="flex flex-wrap gap-2">
-          <template v-if="attr.type === 'single' || attr.type === 'multiple'">
+          <template v-if="attr.type === AttributeType.SINGLE || attr.type === AttributeType.MULTIPLE">
             <UBadge
               v-for="(val, idx) in attr.values"
               :key="val.slug ?? idx"

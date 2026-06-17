@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductResponse } from '@sokol111/ecommerce-product-query-service-api'
+import type { Product } from '@sokol111/ecommerce-product-query-service-api'
 import Attributes from './_components/Attributes.vue'
 import Gallery from './_components/Gallery.vue'
 import Info from './_components/Info.vue'
@@ -8,7 +8,7 @@ const route = useRoute('product-id')
 
 const productId = computed(() => route.params.id)
 
-const { data: product, error } = await useFetch<ProductResponse>(
+const { data: product, error } = await useFetch<Product>(
   `/api/products/${productId.value}`
 )
 
