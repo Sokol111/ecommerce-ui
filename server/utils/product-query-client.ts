@@ -50,14 +50,24 @@ export function useProductQueryClient(event: H3Event) {
       maxPrice?: number
       attributeFilters?: string
     }): Promise<GetProductListResponse> {
-      return client.getProductList({
+      let parsedAttributeFilters
+      if (params.attributeFilters) {
+        try {
+          parsedAttributeFilters = JSON.parse(params.attributeFilters)
+        } catch {
+          parsedAttributeFilters = undefined
+        }
+      }
+
+      return await client.getProductList({
         page: params.page,
         size: params.size,
         categoryId: params.categoryId,
         sort: params.sort,
         order: params.order,
         minPrice: params.minPrice,
-        maxPrice: params.maxPrice
+        maxPrice: params.maxPrice,
+        attributeFilters: parsedAttributeFilters
       })
     },
 

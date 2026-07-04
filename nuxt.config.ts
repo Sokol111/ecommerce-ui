@@ -39,7 +39,8 @@ export default defineNuxtConfig({
         'vue-router',
         '@vueuse/core',
         'zod',
-        'reka-ui'
+        'reka-ui',
+        '@bufbuild/protobuf/codegenv2'
       ]
     },
     server: {
