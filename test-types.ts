@@ -12,7 +12,6 @@ const testClient: TestClient = {} as TestClient
 
 // Test 3: Try to use the method
 export async function _test() {
-  // @ts-expect-error testing method access
   if (testClient.getCategoryById) {
     const response = await testClient.getCategoryById({ id: 'test' })
     const _category = response.category
