@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product } from '@sokol111/ecommerce-product-query-service-api';
+import type { Product } from '@sokol111/ecommerce-product-query-service-api'
 
 interface Props {
   products: Product[]

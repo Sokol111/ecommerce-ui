@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product } from '@sokol111/ecommerce-product-query-service-api';
+import type { Product } from '@sokol111/ecommerce-product-query-service-api'
 
 const { data: products, error } = await useFetch<Product[]>('/api/products/random', {
   query: { count: 4 }

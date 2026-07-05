@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api';
-import { AttributeType } from '@sokol111/ecommerce-category-query-service-api';
-import type { GetProductFacetsResponse } from '@sokol111/ecommerce-product-query-service-api';
-import RangeFilter from './RangeFilter.vue';
+import type { CategoryAttribute } from '@sokol111/ecommerce-category-query-service-api'
+import { AttributeType } from '@sokol111/ecommerce-category-query-service-api'
+import type { GetProductFacetsResponse } from '@sokol111/ecommerce-product-query-service-api'
+import RangeFilter from './RangeFilter.vue'
 
 const { categoryAttributes, facets } = defineProps<{
   categoryAttributes: CategoryAttribute[]

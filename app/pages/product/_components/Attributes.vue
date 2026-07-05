@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AttributeRole, AttributeType, type AttributeValue } from '@sokol111/ecommerce-product-query-service-api';
+import { AttributeRole, AttributeType, type AttributeValue } from '@sokol111/ecommerce-product-query-service-api'
 
 interface Props {
   attributes: AttributeValue[]
