@@ -9,6 +9,7 @@ const {
   currentFilters,
   setPriceFilter,
   setAttributeFilter,
+  removeAttributeValue,
   clearAllFilters,
   hasActiveFilters
 } = useFilters()
@@ -70,7 +71,7 @@ const priceLabel = computed(() => {
           size="xs"
           icon="i-lucide-x"
           class="ml-1 -mr-1"
-          @click="setAttributeFilter({ slug: filter.slug })"
+          @click="removeAttributeValue(filter.slug, val)"
         />
       </UBadge>
 

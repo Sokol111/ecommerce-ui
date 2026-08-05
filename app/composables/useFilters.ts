@@ -59,6 +59,20 @@ export function useFilters() {
     })
   }
 
+  function removeAttributeValue(slug: string, value: string) {
+    const current = getAttributeFilter(slug)
+    if (!current) return
+
+    const remainingValues = (current.values ?? []).filter(v => v !== value)
+
+    setAttributeFilter({
+      slug,
+      values: remainingValues.length > 0 ? remainingValues : undefined,
+      min: current.min,
+      max: current.max
+    })
+  }
+
   function setPriceFilter(price: PriceFilter) {
     updateFilters({ price })
   }
@@ -74,6 +88,7 @@ export function useFilters() {
   return {
     currentFilters,
     setAttributeFilter,
+    removeAttributeValue,
     setPriceFilter,
     clearAllFilters,
     hasActiveFilters,
