@@ -1,0 +1,19 @@
+app/pages/category/_components/ActiveFilters.vue
+  s_1b0f7bfc3b27cd::t_9456244157ac22 12,74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "0d9be84602fa1b29dfce2f99f68bb07427b23443",
+  "prompts": {},
+  "sessions": {
+    "s_1b0f7bfc3b27cd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_02d308e2affe2ioySmr226CgoN",
+        "model": "kimi-k2.7-code"
+      },
+      "human_author": "Sokol111 <igorsokol111@gmail.com>"
+    }
+  }
+}
