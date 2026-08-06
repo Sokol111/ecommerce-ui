@@ -108,7 +108,7 @@ useSeoMeta({
         <p class="text-sm text-muted">
           Portfolio project by Ihor Sokolovskyi &mdash;
           <a
-            href="https://github.com/Sokol111/ecommerce-infrastructure"
+            href="https://github.com/Sokol111/ecommerce-workspace"
             target="_blank"
             rel="noopener noreferrer"
             class="underline underline-offset-2 hover:text-primary"

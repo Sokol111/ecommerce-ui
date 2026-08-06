@@ -16,7 +16,7 @@
         A full-stack e-commerce platform built with Go microservices and Nuxt.
         Explore the architecture and project structure on
         <a
-          href="https://github.com/Sokol111/ecommerce-infrastructure"
+          href="https://github.com/Sokol111/ecommerce-workspace"
           target="_blank"
           rel="noopener noreferrer"
           class="text-white underline underline-offset-2 hover:text-neutral-100"
